@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spoved-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      run: spoved-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: spoved-deployment
+    spec:
+      containers:
+        - name: spoved-server
+          image: sheason/spoved
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: spoved-volume
+              mountPath: /var/spoved/data
+      volumes:
+        - name: spoved-volume
+          persistentVolumeClaim:
+            claimName: spoved-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spoved-service
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    run: spoved-deployment
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/
+            pathType: Prefix
+            backend:
+              service:
+                name: spoved-service
+                port: 
+                  number: 80
+

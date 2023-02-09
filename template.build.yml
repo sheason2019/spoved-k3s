@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: spoved-build
+spec:
+  template:
+    metadata:
+      name: spoved-build
+    spec:
+      containers:
+        - name: spoved-build
+          image: <images>
+          command: ["sh", "-c" "<enviroment arguments> sh build.sh"]
+        volumeMounts:
+        - name: spoved-volume
+          mountPath: /var/spoved/data
+      volumes:
+        - name: spoved-volume
+          persistentVolumeClaim:
+            claimName: spoved-data-pvc
