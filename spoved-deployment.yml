@@ -13,6 +13,7 @@ spec:
       labels:
         run: spoved-deployment
     spec:
+      serviceAccountName: spoved-operator
       containers:
         - name: spoved-server
           image: sheason/spoved
@@ -30,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: spoved-service
+  name: "root--spoved-service"
   namespace: default
 spec:
   ports:
@@ -54,7 +55,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: spoved-service
-                port: 
+                name: "root--spoved-service"
+                port:
                   number: 80
-

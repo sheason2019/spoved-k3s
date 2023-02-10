@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: spoved-operator
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: spoved-operator
+    namespace: default
+roleRef:
+  kind: Role
+  name: spoved-role
+  apiGroup: rbac.authorization.k8s.io
