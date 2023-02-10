@@ -1,0 +1,1 @@
+docker build . -t sheason/nginx:1.23.3-spoved
