@@ -1,4 +1,4 @@
-CURRENT_DIR=$(dirname $0)
+CURRENT_DIR=$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)
 # 替换 crictl 源
 mkdir -p /etc/rancher/k3s/
 cp configs/registries.yaml /etc/rancher/k3s/
@@ -14,6 +14,7 @@ fi
 # 安装 NerdCtl
 wget "https://github.com/containerd/nerdctl/releases/download/v1.2.0/nerdctl-full-1.2.0-linux-amd64.tar.gz"
 tar -zxvf nerdctl-full-1.2.0-linux-amd64.tar.gz -C /usr/local
+rm "nerdctl-full-1.2.0-linux-amd64.tar.gz"
 
 apt install iptables -y
 nft flush ruleset
@@ -24,8 +25,12 @@ cp configs/nerdctl.toml /etc/nerdctl/nerdctl.toml
 
 # 拉取Spoved源码
 git clone https://github.com/sheason2019/spoved --depth=1 ./spoved
+# 编译Spoved
 nerdctl run --entrypoint sh -v $CURRENT_DIR/spoved:/code golang:1.20.0-alpine3.17 /code/build.sh
-
+# 启动buildkitd守护进程
+buildkitd &
+# 构建Spoved镜像
+nerdctl build -t sheason/spoved ./spoved
 
 # # 加载Role
 # k3s kubectl apply -f ./spoved-role.yml
