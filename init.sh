@@ -33,7 +33,7 @@ nerdctl run --entrypoint sh -v $CURRENT_DIR/spoved:/code --env PRODUCT=true gola
 # 启动buildkitd守护进程
 buildkitd &
 # 构建Spoved镜像
-nerdctl build -t root/spoved ./spoved 
+nerdctl build -t root/spoved:0.0.1 ./spoved
 # 删除Spoved源码
 rm -rf ./spoved
 
