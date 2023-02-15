@@ -29,11 +29,11 @@ nerdctl build -t root/spoved-nginx ./containers/nginx
 # 拉取Spoved源码
 git clone https://github.com/sheason2019/spoved --depth=1 ./spoved
 # 编译Spoved
-nerdctl run --entrypoint sh -v $CURRENT_DIR/spoved:/code golang:1.20.0-alpine3.17 /code/build.sh
+nerdctl run --entrypoint sh -v $CURRENT_DIR/spoved:/code --env PRODUCT=true golang:1.20.0-alpine3.17 /code/build.sh
 # 启动buildkitd守护进程
 buildkitd &
 # 构建Spoved镜像
-nerdctl build -t root/spoved ./spoved
+nerdctl build -t root/spoved ./spoved 
 # 删除Spoved源码
 rm -rf ./spoved
 
