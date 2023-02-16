@@ -47,13 +47,13 @@ nerdctl build -t root/spoved-fe ./spoved-fe
 # 删除Spoved-FE源码
 rm -rf ./spoved-fe
 
-# # 加载Role
-# k3s kubectl apply -f ./spoved-role.yml
-# # 加载ServiceAccount
-# k3s kubectl apply -f ./spoved-service-account.yml
-# # 绑定Role和ServiceAccount
-# k3s kubectl apply -f ./spoved-role-binding.yml
-# # 加载持久卷
-# k3s kubectl apply -f ./spoved-pvc.yml
+# 加载Role
+k3s kubectl apply -f ./spoved-role.yml
+# 加载ServiceAccount
+k3s kubectl apply -f ./spoved-service-account.yml
+# 绑定Role和ServiceAccount
+k3s kubectl apply -f ./spoved-role-binding.yml
+# 加载持久卷
+k3s kubectl apply -f ./spoved-pvc.yml
 # # 加载Spoved默认服务
 # k3s kubectl apply -f ./spoved-deployment.yml
