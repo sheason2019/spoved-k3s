@@ -37,15 +37,6 @@ nerdctl build -t root/spoved:0.0.1 ./spoved
 # 删除Spoved源码
 rm -rf ./spoved
 
-# 拉取Spoved-FE源码
-git clone https://github.com/sheason2019/spoved-fe --depth=1 ./spoved-fe
-# 编译Spoved-FE
-nerdctl run --entrypoint sh -v $CURRENT_DIR/spoved-fe:/code node:16-alpine /code/build.sh
-# 构建Spoved-FE镜像
-cp containers/spoved-fe/Dockerfile spoved-fe
-nerdctl build -t root/spoved-fe ./spoved-fe
-# 删除Spoved-FE源码
-rm -rf ./spoved-fe
 
 # 加载Role
 k3s kubectl apply -f ./spoved-role.yml
