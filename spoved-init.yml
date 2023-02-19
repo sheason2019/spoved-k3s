@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "spoved-init"
+spec:
+  template:
+    spec:
+      serviceAccountName: spoved-operator
+      containers:
+        - name: spoved-init
+          image: root/spoved-init
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: spoved-volume
+              mountPath: /data
+      restartPolicy: Never
+      volumes:
+        - name: spoved-volume
+          persistentVolumeClaim:
+            claimName: spoved-data-pvc
+  backoffLimit: 1
