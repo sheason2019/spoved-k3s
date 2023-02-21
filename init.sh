@@ -25,6 +25,8 @@ cp configs/nerdctl.toml /etc/nerdctl/nerdctl.toml
 
 # 启动buildkitd守护进程
 buildkitd &
+# 等待buildkitd启动
+sleep 3s
 # 构建特制Nginx镜像
 nerdctl build -t root/spoved-nginx ./containers/nginx
 
