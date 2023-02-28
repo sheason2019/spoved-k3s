@@ -33,7 +33,7 @@ nerdctl build -t root/spoved-nginx ./containers/nginx
 # 拉取Spoved源码
 git clone https://github.com/sheason2019/spoved --depth=1 -b develop ./spoved
 # 编译Spoved初始化脚本
-nerdctl run --entrypoint sh -v $CURRENT_DIR/spoved:/code --env PRODUCT=true --env BUILD_TYPE=INITIAL golang:1.20.0-alpine3.17 /code/build.sh
+nerdctl run --entrypoint sh -v $CURRENT_DIR/spoved:/code --env PRODUCTION=true --env BUILD_TYPE=INITIAL golang:1.20.0-alpine3.17 /code/build.sh
 # 构建Spoved镜像
 nerdctl build -t root/spoved-init ./spoved
 # 删除Spoved源码
